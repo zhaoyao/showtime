@@ -20,7 +20,9 @@ func (c *ResourceController) Get() {
 		c.Data["json"] = map[string]interface{}{
 			"code": 0,
 			"id":   id,
-			"data": files,
+			"data": map[string]interface{}{
+				"Episodes": files,
+			},
 		}
 	}
 

@@ -9,6 +9,7 @@ import (
 )
 
 var (
+	resInfoURL     = "http://" + domain + "/gresource/%s"
 	resFileListURL = "http://" + domain + "/gresource/list/%s"
 )
 
@@ -35,14 +36,14 @@ func (c *Ctx) GetResource(id string) ([]*File, error) {
 	resp, err := c.client.Get(fmt.Sprintf(resFileListURL, id))
 	if err != nil {
 		if strings.Contains(err.Error(), "2012: getsockopt: connection refused") {
-			return nil, fmt.Errorf("list: not resource")
+			return nil, fmt.Errorf("ListLinks: resource not found")
 		} else {
 			return nil, err
 		}
 	}
 
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("list: http %s", resp.StatusCode)
+		return nil, fmt.Errorf("ListLinks: http %s", resp.StatusCode)
 	}
 
 	doc, err := goquery.NewDocumentFromResponse(resp)

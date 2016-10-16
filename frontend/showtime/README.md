@@ -1,6 +1,6 @@
 # showtime
 
-> It's show time
+> It's show time !
 
 ## Build Setup
 

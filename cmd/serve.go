@@ -16,6 +16,8 @@ package cmd
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/plugins/cors"
+
 	"github.com/spf13/cobra"
 	_ "github.com/zhaoyao/showtime/routers"
 )
@@ -25,6 +27,13 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "run http server",
 	Run: func(cmd *cobra.Command, args []string) {
+		beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
+			AllowOrigins:     []string{"*"},
+			AllowMethods:     []string{"GET"},
+			AllowHeaders:     []string{"Origin"},
+			ExposeHeaders:    []string{"Content-Length"},
+			AllowCredentials: true,
+		}))
 		beego.Run()
 	},
 }
